@@ -1,0 +1,115 @@
+﻿@model EmployeeManagement.Models.Account.Register
+@{
+    Layout = "~/Views/Shared/_LogInLayout.cshtml";
+    ViewBag.Titl = "Register";
+} @if (ViewBag.Error != null)
+{
+    <div style="color : white" class="alert alert-dark alert-dismissible fade show float-lg-right" role="alert">
+        @Html.Raw(ViewBag.Error)
+        <button type="button" class="close" data-dismiss="alert" aria-label="close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+}
+<div class="contents order-2 order-md-1">
+
+    <div class="container">
+        <div class="row align-items-center justify-content-center">
+            <div class="col-md-7">
+                <div class="mb-4">
+
+                </div>
+
+                <div id="wrapper">
+
+                    <div class="card card-authentication1 mx-auto my-4">
+                        <div class="card-body">
+                            <div class="card-content p-2">
+                                <div class="text-center">
+                                    <img src="../assets/images/Logo-AIT.png" class="logo-icon" alt="logo icon">
+                                </div>
+                                <div class="card-title text-uppercase text-center py-3">Sign Up</div>
+
+
+                                <form asp-controller="Account" asp-action="Register" method="post">
+                                    @*text email*@
+                                    <div class="form-group">
+                                        <label for="exampleInputEmailId" class="sr-only">Email ID</label>
+                                        <div class="position-relative has-icon-right">
+                                            <input asp-for="Email" type="text" id="exampleInputEmailId" class="form-control input-shadow" placeholder="Enter Your Email ">
+                                            <div class="form-control-position">
+                                                <i class="icon-envelope-open"></i>
+                                            </div>
+                                            <span asp-validation-for="Email" class="text-danger w-100"></span>
+                                        </div>
+                                    </div>
+
+                                    @*text pass*@
+                                    <div class="form-group">
+                                        <label for="exampleInputPassword" class="sr-only">Password</label>
+                                        <div class="position-relative has-icon-right">
+                                            <input asp-for="Password" type="text" id="exampleInputPassword" class="form-control input-shadow" placeholder=" Password">
+                                            <div class="form-control-position">
+                                                <i class="icon-lock"></i>
+                                            </div>
+                                            <span asp-validation-for="Password" class="text-danger w-100"></span>
+                                        </div>
+                                    </div>
+
+                                    @*again pass*@
+                                    <div class="form-group">
+                                        <label for="exampleInputPassword" class="sr-only">Password</label>
+                                        <div class="position-relative has-icon-right">
+                                            <input asp-for="ConfirmPassword" type="text" id="exampleInputPassword" class="form-control input-shadow" placeholder="ConfirmPassword">
+                                            <div class="form-control-position">
+                                                <i class="icon-lock"></i>
+                                            </div>
+                                            <span asp-validation-for="ConfirmPassword" class="text-danger w-100"></span>
+                                        </div>
+                                    </div>
+
+                                    <div class="d-flex mb-5 align-items-center">
+                                        <label class="control control--checkbox mb-3 mb-sm-0">
+                                            <span class="caption">Agree our <a href="#">Terms and Conditions</a></span>
+                                            <input type="checkbox" checked="checked" />
+                                            <div class="control__indicator"></div>
+                                        </label>
+                                    </div>
+
+                                    <button type="submit" class="btn btn-light btn-block waves-effect waves-light">Sign Up</button>
+
+                                    <span class="d-block text-center my-4 text-muted">&mdash; or &mdash;</span>
+
+                                </form>
+
+
+                            </div>
+                        </div>
+                        <div class="card-footer text-center py-3">
+                            <p asp-controller="Account" asp-action="Login" class="text-warning mb-0">Already have an account?  <a asp-controller="Account" asp-action="Login"> Sign In here</a></p>
+                        </div>
+                    </div>
+
+                    <!--Start Back To Top Button-->
+                    <a href="javaScript:void();" class="back-to-top"><i class="fa fa-angle-double-up"></i> </a>
+                </div><!--wrapper-->
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

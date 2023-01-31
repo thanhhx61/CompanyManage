@@ -1,0 +1,88 @@
+﻿@model EmployeeManagement.Models.Employee.CreateEmployee
+
+@{
+    ViewBag.Title = $"{ViewBag.CategoryName} | Create";
+}
+
+
+
+<div class="main-grid">
+    <form asp-controller="Employee" asp-action="Create" method="post" enctype="multipart/form-data">
+        <div class="row">
+            <div class="col-md-6">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="form-group">
+                    <label asp-for="EmployeeName" class="control-label"></label>
+                    <input asp-for="EmployeeName" class="form-control" />
+                    <span asp-validation-for="EmployeeName" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="Dob" class="control-label"></label>
+                    <input min="1980-01-01" max="2001-12-31" asp-for="Dob" class="form-control" />
+                    <span asp-validation-for="Dob" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Skill" class="control-label"></label>
+                    <input asp-for="Skill" class="form-control" />
+                    <span asp-validation-for="Skill" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Introduce" class="control-label"></label>
+                    <input asp-for="Introduce" class="form-control" />
+                    <span asp-validation-for="Introduce" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Street" class="control-label"></label>
+                    <input asp-for="Street" class="form-control" />
+                    <span asp-validation-for="Street" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Workingday" class="control-label"></label>
+                    <input min="2001-03-01"  asp-for="Workingday" class="form-control" />
+                    <span asp-validation-for="Workingday" class="text-danger"></span>
+                </div>
+
+                <button type="submit" class="btn btn-primary">Submit</button>
+
+
+
+                <a class="btn btn-light px-5" asp-action="Index" asp-route-offiId="@ViewBag.OfficeId"><i></i> << BACK</a>
+
+
+            </div>
+
+            <div class="center">
+                <div class="form-input">
+                    <div class="preview">
+                        <img style="width : 200px ; height : 200px" id="file-ip-1-preview" class="img-thumbnail no-photo" src="~/Images/No-Image.png" alt="no photo" />
+                    </div>
+                    <label asp-for="Photo" for="file-ip-1">Upload Image</label>
+                    <input asp-for="Photo" type="file" id="file-ip-1" accept="image/*" onchange="showPreview(event);">
+                    <span asp-validation-for="Photo" class="text-danger"></span>
+                </div>
+
+
+
+            </div>
+
+          
+
+</form>
+</div>
+
+
+
+
+<script type="text/javascript">
+    function showPreview(event) {
+        if (event.target.files.length > 0) {
+            var src = URL.createObjectURL(event.target.files[0]);
+            var preview = document.getElementById("file-ip-1-preview");
+            preview.src = src;
+            preview.style.display = "block";
+        }
+    }
+</script>
+
+

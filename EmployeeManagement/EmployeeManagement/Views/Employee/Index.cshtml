@@ -1,0 +1,213 @@
+﻿@model ListEmployee
+@using System.Globalization
+@{ ViewBag.Title = Model.Offices.OfficeName;
+    string FormatCurrency(double number)
+    {
+        CultureInfo cul = CultureInfo.GetCultureInfo("vi-VN");
+        return number.ToString("#,###", cul.NumberFormat);
+    }
+     }
+<div class="main-grid">
+    <div class="col-lg-15">
+        <div class="card">
+            <div class="card-body">
+                <div class="card-title">
+                    @Model.Offices.OfficeName
+                    <div class="float-right">
+                        <a class="btn btn-light px-4" asp-controller="Offices" asp-action="Index"><i></i> << Back</a><br />
+                    </div>
+                </div>
+                <hr>
+                <div class="form-group">
+                    <label for="input-1"> Search  </label>
+                    <form class="search-bar" asp-controller="Employee" asp-action="Index" asp-route-offiId="@Model.Offices.OfficeId" method="post">
+                        <input style="color : white" type="text" name="keyword" placeholder="Search">
+                        <button class="btn btn-small" style="background-color: gray" type="submit"><i class="fa fa-search" aria-hidden="true"></i></button>
+                    </form>
+                    <div class="w-100 mb-3">
+
+                        <div class="float-right text-right">
+                            @if (Model.Offices.IsDeleted == false)
+                            {
+                <a type="button" class="btn btn-light btn-block px-4" asp-controller="Employee" asp-action="Create"><i class="zmdi zmdi-account-add"></i>  CREATE</a> }
+            else
+            {
+<a></a>}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12 col-lg-12">
+            <div class="card">
+                <div class="table-responsive">
+
+                    <table class="table align-items-center table-flush table-borderless" id="ticketLinesTable">
+                        <thead>
+                            <tr>
+                                <th style="width: 5%">
+                                    #
+                                </th>
+                                <th style="width: 10%" class="text-center">
+                                    Photo
+                                </th>
+                                <th style="width: 25%" class="text-center">
+                                    Name
+                                </th>
+                                <th style="width: 20%" class="text-center">
+                                    Street
+                                </th>
+                                <th style="width: 5%" class="text-center">
+                                    Status
+                                </th>
+                                <th style="width: 20%">
+                                    Action
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (Employees emp in Model.Offices.Employees)
+                            {
+                <tr>
+                    <td>@emp.EmployeeId.</td>
+                    <td class="text-center">
+                        <img style="width: 80px; height:80px;object-fit:cover" class="img-fluid img-thumbnail img-lg" src=@Url.Content(emp.Photo) alt="@emp.EmployeeName" />
+                    </td>
+                    <td>@emp.EmployeeName</td>
+                    <td style="text-overflow:ellipsis" class="text-center">
+                        @emp.Street
+                    </td>
+                    <td class="project-state text-center">
+                        @if (emp.IsDeleted)
+                        {
+                <span style="color : red">Unemployment</span> }
+                         else
+                        {
+                <span style="color : red">Worrking</span>}
+                    </td>
+                    <td class="project-actions ">
+                        @if (!emp.IsDeleted)
+                        {
+
+
+                <a class="btn btn-light px-5" asp-controller="Employee" asp-action="View" asp-route-employeeId="@emp.EmployeeId"><i class="zmdi zmdi-accounts"></i> View</a><br />
+
+
+
+                                    <a class="btn btn-light px-5" asp-controller="Employee" asp-action="Modify" asp-route-employeeId="@emp.EmployeeId"><i class="zmdi zmdi-brush"></i> Edit</a><br />
+
+
+
+                                                        <a class="btn btn-light px-4" asp-controller="Employee" asp-action="Remove" asp-route-employeeId="@emp.EmployeeId" onclick="return confirm('Are you sure you want to Unemployment  ?');"><i class="zmdi zmdi-mood-bad"></i> Unemployee</a> }
+                                                    else
+                                                    {
+
+                                    <a class="btn btn-light px-5" asp-controller="Employee" asp-action="Restore" asp-route-employeeId="@emp.EmployeeId"><i class="zmdi zmdi-male"></i> Woking</a>}
+                    </td>
+                </tr>}
+                        </tbody>
+                    </table>
+
+
+                    <div class="go-top">
+                        <p class="go-top-text"><strong>BACK</strong></p>
+                    </div>
+
+
+
+                    <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js'></script>
+                    <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js" integrity="sha512-uto9mlQzrs59VwILcLiRYeLKPPbS/bT71da/OEBYEwcdNUk8jYIy+D176RYoop1Da+f9mvkYrmj5MCLZWEtQuA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+                    <script src="~/assets/js/jquery.simpleLoadMore.js"></script>
+
+                   
+
+                    <script>
+                        window.console = window.console || function (t) { };
+                    </script>
+                    <script>
+                        if (document.location.search.match(/type=embed/gi)) {
+                            window.parent.postMessage("resize", "*");
+                        }
+                    </script>
+                    <script src="https://cpwebassets.codepen.io/assets/common/stopExecutionOnTimeout-1b93190375e9ccc259df3a57c1abc0e64599724ae30d7ea4c6877eb615f89387.js"></script>
+                    <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.2/jquery.min.js'></script>
+                    <script id="rendered-js">
+                        $(function () {
+                            /* initial variables */
+                            var numRows = $('#ticketLinesTable').find('tr').length;
+                            var SHOWN = 5;
+                            var MORE = 5;
+                            /* get how many more can be shown */
+                            var getNumMore = function (ns) {
+                                var more = MORE;
+                                var leftOver = numRows - ns;
+                                if (leftOver < more) {
+                                    more = leftOver;
+                                }
+                                return more;
+                            };
+                            /* how many are shown */
+                            var getInitialNumShown = function () {
+                                var shown = SHOWN;
+                                if (numRows < shown) {
+                                    shown = numRows;
+                                }
+                                return shown;
+                            };
+                            /* set how many are initially shown */
+                            var numShown = getInitialNumShown();
+
+                            /* set the numMore if less than 20 */
+                            var numMore = getNumMore(numShown);
+
+                            /* set more html */
+                            if (numMore > 0) {
+                                var more_html = '<p><button id="more">Show <span style="font-weight: bold;">' + numMore + '</span> More...</button></p>';
+                                $('#ticketLinesTable').find('tr:gt(' + (numShown - 1) + ')').hide().end().after(more_html);
+                            }
+                            $('#more').click(function () {
+                                /* determine how much more we should update */
+                                numMore = getNumMore(numShown);
+                                /* update num shown */
+                                numShown = numShown + numMore;
+                                $('#ticketLinesTable').find('tr:lt(' + numShown + ')').show();
+
+                                /* determine if to show more and how much left over */
+                                numMore = getNumMore(numShown);
+                                if (numMore > 0) {
+                                    $('#more span').html(numMore);
+                                } else {
+                                    $('#more').remove();
+                                }
+                            });
+                        });
+                    </script>
+
+
+
+
+
+
+                    @*Back To Top*@
+                    <script src="https://cpwebassets.codepen.io/assets/common/stopExecutionOnTimeout-1b93190375e9ccc259df3a57c1abc0e64599724ae30d7ea4c6877eb615f89387.js"></script>
+
+                    <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
+                    <script id="rendered-js">
+                        $(function () {
+
+                            //Scroll event
+                            $(window).scroll(function () {
+                                var scrolled = $(window).scrollTop();
+                                if (scrolled > 200) $('.go-top').fadeIn('slow');
+                                if (scrolled < 200) $('.go-top').fadeOut('slow');
+                            });
+
+                            //Click event
+                            $('.go-top').click(function () {
+                                $("html, body").animate({ scrollTop: "0" }, 500);
+                            });
+
+                        });
+                    </script>

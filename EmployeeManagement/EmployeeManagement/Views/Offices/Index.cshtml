@@ -1,0 +1,76 @@
+﻿@model EmployeeManagement.Models.Offices.OfficeView
+@{
+    ViewBag.Title = "Office";
+    var count = 1;
+    var pageNumber = 1;
+}
+
+<div class="row">
+    <div class="col-12 col-lg-12">
+        <div class="card">
+            <div class="card-header">             
+                <form class="search-bar" asp-controller="Offices" asp-action="Index" method="post">
+                    <input style="color : white" type="text" name="keyword" placeholder="Search">
+                    <button class="btn btn-small" style="background-color: gray" type="submit"><i class="fa fa-search" aria-hidden="true"></i></button>
+                </form>
+            </div>
+            <div class="table-responsive">
+                <table  class="table align-items-center table-flush table-borderless">
+                    <thead>
+                        <tr>
+                            <th style="width: 5%">#</th>
+                            <th style="width: 35%">Offices Name</th>
+                            <th style="width: 10%">Street</th>
+                            <th style="width: 10%">Number of Employees</th>
+                            <th style="width: 10%">Status</th>
+                            <th style="width: 10%">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (Offices offi in Model.Offices)
+                        {
+                        <tr>
+                            <td>@offi.OfficeId</td>
+                            <td><a >@offi.OfficeName</a></td>
+                            <td>@offi.Street</td>
+                            <td>@offi.Employees.Count</td>
+                            <td>
+                                @if (offi.IsDeleted)
+                                {
+                                <span style="color : red">Stop Recruiting</span>
+                                }
+                                else
+                                {
+                                <span style="color : red">Recruitment</span>
+                                }
+                            </td>
+                            <td>
+
+                                <a style="color : aqua" type="button" class="btn btn-light btn-block" asp-controller="Employee" asp-action="Index" asp-route-offiId="@offi.OfficeId"><i class=" zmdi zmdi-account-box-mail"></i> VIEW</a>
+                                @if (!offi.IsDeleted)
+                                {
+
+
+                                    <a style="color : red" type="button" class="btn btn-light btn-block" asp-controller="Offices" asp-action="Remove" asp-route-officeId="@offi.OfficeId" onclick="return ;"><i class="icon-lock"></i> Stop Recruiting</a>
+
+                                }
+                                else
+                                {
+                                 
+
+                                    <a style="color : lightsteelblue" type="button" class="btn btn-light btn-block" asp-controller="Offices" asp-action="Restore" asp-route-officeId="@offi.OfficeId"><i class=" zmdi zmdi-account-box-mail"></i> Recruitment</a>
+                                }
+                            </td>
+
+                        </tr>
+                        }
+
+
+                    </tbody>
+                </table>
+
+            </div>
+        </div>
+    </div>
+</div>
+
